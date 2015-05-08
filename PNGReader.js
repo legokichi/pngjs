@@ -12,12 +12,17 @@ var inflate = (function(){
 			return zlib.inflate(new Buffer(data), callback);
 		};
 	} else {
+    var pako = require("./bower_components/pako/dist/pako_inflate.min.js");
+    return function(data, callback) {
+       return callback(null, pako.inflate(data));
+    };
+  }/*else{
 		var stream = require('./stream');
 		return function(data, callback){
 			data = new stream.FlateStream(new stream.Stream(data));
 			callback(null, data.getBytes());
 		};
-	}
+	}*/
 })();
 
 var ByteBuffer = isNode ? Buffer : (function(){
